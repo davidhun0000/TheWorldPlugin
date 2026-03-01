@@ -1,0 +1,14 @@
+name: TheWorldPlugin
+version: 1.4
+main: com.theworld.TheWorldPlugin
+api-version: 1.20
+authors: [Author]
+softdepend: [PlaceholderAPI]
+commands:
+  theworld:
+    description: TheWorld admin commands
+    usage: /theworld <reload|info|give <player>|remove>
+    permission: theworld.admin
+permissions:
+  theworld.admin:
+    default: op
