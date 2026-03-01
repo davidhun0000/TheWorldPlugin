@@ -1,0 +1,46 @@
+# Cooldown settings for The World activation
+cooldown:
+  min-minutes: 10
+  max-minutes: 20
+
+# Combat settings
+combat:
+  duration-minutes: 20
+
+# Broadcast settings
+broadcasts:
+  online-interval-minutes: 15
+  offline-interval-minutes: 60
+
+# Coordinate vagueness ranges
+coordinates:
+  range-online: 400  # Blocks added/subtracted from coordinates for vagueness
+  range-offline: 200
+
+# Proximity alert settings
+proximity:
+  radius: 200  # Block radius to trigger proximity alert
+  check-interval-seconds: 30  # How often to check proximity
+
+# Buffs applied to the holder
+buffs:
+  enabled: true
+  extra-hearts: 4  # Half-hearts added to max health (2 hearts = 4 half-hearts)
+  strength-level: 1  # Strength potion effect level
+
+# Messages
+messages:
+  dragon-first-kill: "&6&lYou have defeated the Ender Dragon and claimed &e&lThe World&6&l!"
+  dragon-already-claimed: "&cThe World item has already been claimed by another warrior. Defeat them to take it!"
+  item-activated: "&e&lZA WARUDO! &7Time has stopped for 3 seconds!"
+  item-on-cooldown: "&cThe World is recharging! &7Time remaining: &e%time%"
+  combat-started: "&cYou are now in combat! &7Do not log out for &e20 minutes&7!"
+  combat-ended: "&aYou are no longer in combat."
+  combat-death-broadcast: "&c&l%player% &7logged out during combat and &cdied&7! &e&l%attacker% &7has claimed &e&lThe World&7!"
+  holder-died-broadcast: "&c&l%killer% &7has slain &e&l%holder% &7and claimed &e&lThe World&7!"
+  coordinate-broadcast-online: "&8[&e&lThe World&8] &7The holder of The World was spotted near &eX: %x_min% ~ %x_max% &7| &eZ: %z_min% ~ %z_max% &7| &eY: %y% &7in &e%world%"
+  coordinate-broadcast-offline: "&8[&e&lThe World&8] &7The last known location of The World's holder: &eX: %x_min% ~ %x_max% &7| &eZ: %z_min% ~ %z_max% &7| &eY: %y% &7in &e%world%"
+  cannot-drop: "&cYou cannot drop The World!"
+  title-king: "&e&lKing of the World"
+  title-subtitle: "&7Holder of The World"
+  proximity-alert: "&8[&e&lThe World&8] &7You are close to the holder of The World!"
