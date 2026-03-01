@@ -12,9 +12,9 @@ import com.cryptomorin.xseries.XPotion;
 
 import lombok.Getter;
 
-import org.bukkit.potion.PotionEffectType;
-
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -28,6 +28,8 @@ import java.util.List;
 import java.util.UUID;
 
 public class ItemManager {
+
+    private static final NamespacedKey KING_HEALTH_MODIFIER_KEY = new NamespacedKey("theworldplugin", "king_health");
 
     private final TheWorldPlugin plugin;
     private File dataFile;
@@ -213,14 +215,17 @@ public void applyBuffs(Player player) {
     XAttribute.of("MAX_HEALTH").ifPresent(attr -> {
         var attribute = player.getAttribute(attr.get());
         if (attribute != null) {
-            // Törlés, hogy ne halmozódjon
-            attribute.getModifiers().forEach(mod -> {
-                if (mod.getName().equals("KingHealth")) attribute.removeModifier(mod);
+            attribute.getModifiers().forEach(modifier -> {
+                if (KING_HEALTH_MODIFIER_KEY.equals(modifier.getKey())) {
+                    attribute.removeModifier(modifier);
+                }
             });
             
-            // Hozzáadás
-            attribute.addModifier(new org.bukkit.attribute.AttributeModifier(
-                UUID.randomUUID(), "KingHealth", extraHP, org.bukkit.attribute.AttributeModifier.Operation.ADD_NUMBER));
+            attribute.addModifier(new AttributeModifier(
+                KING_HEALTH_MODIFIER_KEY,
+                extraHP,
+                AttributeModifier.Operation.ADD_NUMBER
+            ));
         }
     });
 
@@ -234,17 +239,18 @@ public void applyBuffs(Player player) {
 
         if (!plugin.getConfig().getBoolean("buffs.enabled", true)) return;
 
-        int extraHearts = plugin.getConfig().getInt("buffs.extra-hearts", 4);
+        XAttribute.of("MAX_HEALTH").ifPresent(attr -> {
+            var attribute = player.getAttribute(attr.get());
+            if (attribute == null) return;
 
-        XAttribute.of("max_health").ifPresent(attr -> {
-
-            double current = player.getAttribute(attr.get()).getBaseValue();
-
-            player.getAttribute(attr.get()).setBaseValue(Math.max(0, current - extraHearts));
-
+            attribute.getModifiers().forEach(modifier -> {
+                if (KING_HEALTH_MODIFIER_KEY.equals(modifier.getKey())) {
+                    attribute.removeModifier(modifier);
+                }
+            });
         });
 
-        XPotion.matchXPotion("INCREASE_DAMAGE").ifPresent(xp -> player.removePotionEffect(xp.getPotionEffectType()));
+        XPotion.matchXPotion("STRENGTH").ifPresent(xp -> player.removePotionEffect(xp.getPotionEffectType()));
 
     }
 

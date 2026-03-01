@@ -9,8 +9,6 @@ import com.theworld.manager.ItemManager;
 import com.theworld.manager.TimeStopManager;
 import com.theworld.placeholder.TheWorldPlaceholder;
 import lombok.Getter;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class TheWorldPlugin extends JavaPlugin {
@@ -37,7 +35,11 @@ public class TheWorldPlugin extends JavaPlugin {
             new TheWorldPlaceholder(this).register();
         }
 
-        getCommand("theworld").setExecutor(new com.theworld.command.TheWorldCommand(this));
+        if (getCommand("theworld") != null) {
+            getCommand("theworld").setExecutor(new com.theworld.command.TheWorldCommand(this));
+        } else {
+            getLogger().severe("Command 'theworld' is missing from plugin.yml");
+        }
 
         coordinateManager.startBroadcastTask();
     }
